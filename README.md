@@ -12,27 +12,27 @@ The tool can be:
 First you need to have Python 3.10 or higher installed.
 You must use the Python MCP SDK 1.2.0 or higher.
 
-# Install uv 
+## Install uv 
 macOS / Linux
     curl -LsSf https://astral.sh/uv/install.sh | sh
 Windows
     powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-# Clone repo
+## Clone repo
 git clone https://github.com/Josefgus/schenker-tracker
 cd schenker-tracker
 uv sync
 
-# Install the headless browser
+## Install the headless browser
 uv run playwright install chromium
 
-# To start MCP server
+## To start MCP server
 uv run python schenker_server.py
 
-# To test in terminal
+## To test in terminal
 uv run python shenker_terminal.py
 
-# To test with Claude for Desktop
+## To test with Claude for Desktop
 install latest version of claude desktop https://claude.com/download
 Run claude
 
@@ -60,7 +60,7 @@ You may need to put the full path to the uv executable in the command field. You
 
 Restart Claude and the mcp server should be detected, then you clould ask for tracking updates for a package.
 
-# How to test the tool 
+## How to test the tool 
 To test the tool in the terminal, run the script schenker_terminal.py
 Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236')
 Printed in the terminal is all relevent information given the reference number.
