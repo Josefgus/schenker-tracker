@@ -21,7 +21,9 @@ Windows
 
 ### Clone repo
 git clone https://github.com/Josefgus/schenker-tracker
+
 cd schenker-tracker
+
 uv sync
 
 ### Install the headless browser
@@ -35,11 +37,13 @@ uv run python shenker_terminal.py
 
 ### To test with Claude for Desktop
 install latest version of claude desktop https://claude.com/download
+
 Run claude
 
 open App configuration at ~/Library/Application Support/Claude/claude_desktop_config.json (for macOS/linux)
 
 or 
+
 AppData\Claude\claude_desktop_config.json (for Windows)
 
 add our mcp server like so:
@@ -67,6 +71,7 @@ Restart Claude and the mcp server should be detected, then you clould ask for tr
 ### How to test the tool 
 To test the tool in the terminal, run the script schenker_terminal.py
 Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236'). 
+
 Printed in the terminal is all relevent information given the reference number.
 
 # How did I approach extracting data from schenker?
