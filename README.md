@@ -66,11 +66,11 @@ Restart Claude and the mcp server should be detected, then you clould ask for tr
 
 ### How to test the tool 
 To test the tool in the terminal, run the script schenker_terminal.py
-Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236')
+Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236'). 
 Printed in the terminal is all relevent information given the reference number.
 
 # How did I approach extracting data from schenker?
-Initial Exploration of the project. 
+### Initial Exploration of the project. 
 I started by manually checking the public DB Schenker tracking portal to see what data was visible and how it was fetched. I used browser developer tools to analyze network traffic and the structure of the site to find where the information came from. I soon realized that a standard GET or POST request would not work because the website is a modern application that relies on client-side JavaScript to show data. The site also uses cookies and security checks like CAPTCHAs to stop automated scraping. To solve the JavaScript and security problems I decided to use a headless browser with Playwright. This allows the script to run a full browser without a GUI and execute all JavaScript like a real user. It also handles cookies and sessions automatically. I asked an AI for help to brainstorm ways to catch background network requests which led to the final solution. 
 
 I wanted to track every individual package but I was stuck. The swedish website i was using did not include this data. After some googling i hapend to land on the US website and I saw that the US version of the tracking app provides much more information. I analyzed the background traffic of the US site and found a specific JSON response that contained the detailed data I needed. I updated the code to use the international tracking URL and intercept the raw JSON data instead of scraping text from the screen. This makes the data very accurate. The tool now provides the full shipment history and specific status updates for every single package in the shipment.
