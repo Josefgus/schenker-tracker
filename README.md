@@ -15,6 +15,7 @@ You must use the Python MCP SDK 1.2.0 or higher.
 ### Install uv 
 macOS / Linux
     curl -LsSf https://astral.sh/uv/install.sh | sh
+
 Windows
     powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
@@ -42,6 +43,7 @@ or
 AppData\Claude\claude_desktop_config.json (for Windows)
 
 add our mcp server like so:
+```
 {
   "mcpServers": {
     "schenker_tracker": {
@@ -55,6 +57,8 @@ add our mcp server like so:
     }
   }
 }
+```
+
 
 You may need to put the full path to the uv executable in the command field. You can get this by running which uv on macOS/Linux or where uv on Windows.
 
