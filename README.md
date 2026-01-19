@@ -1,4 +1,12 @@
-I followd the official MCP websites guide on how to set up an MCP server. But if you have downloaded this repo you do not need to folow all the steps.
+# DB Schenker MCP Tracker
+
+This project is an **MCP (Model Context Protocol) server** that tracks DB Schenker shipments by intercepting internal tracking data from the public DB Schenker website.  
+It uses **Playwright** to run a headless browser and capture detailed shipment information that is not available through traditional scraping or simple HTTP requests.
+
+The tool can be:
+- Run as an MCP server for use with **Claude Desktop**
+- Tested locally via a terminal script
+
 
 # Instructions on how to set up and test the tool
 First you need to have Python 3.10 or higher installed.
@@ -18,11 +26,11 @@ uv sync
 # Install the headless browser
 uv run playwright install chromium
 
-# Start MCP server
+# To start MCP server
 uv run python schenker_server.py
 
-# Test in terminal
-uv run python schenker_terminal.py
+# To test in terminal
+uv run python shenker_terminal.py
 
 # To test with Claude for Desktop
 install latest version of claude desktop https://claude.com/download
@@ -36,7 +44,7 @@ AppData\Claude\claude_desktop_config.json (for Windows)
 add our mcp server like so:
 {
   "mcpServers": {
-    "db_tracker": {
+    "schenker_tracker": {
       "command": "uv",
       "args": [
         "--directory",
@@ -55,8 +63,9 @@ Restart Claude and the mcp server should be detected, then you clould ask for tr
 # How to test the tool 
 To test the tool in the terminal, run the script schenker_terminal.py
 Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236')
+Printed in the terminal is all relevent information given the reference number.
 
-# How do I approach extracting data from schenker?
+# How did I approach extracting data from schenker?
 Initial Exploration of the project. 
 I started by manually checking the public DB Schenker tracking portal to see what data was visible and how it was fetched. I used browser developer tools to analyze network traffic and the structure of the site to find where the information came from. I soon realized that a standard GET or POST request would not work because the website is a modern application that relies on client-side JavaScript to show data. The site also uses cookies and security checks like CAPTCHAs to stop automated scraping. To solve the JavaScript and security problems I decided to use a headless browser with Playwright. This allows the script to run a full browser without a GUI and execute all JavaScript like a real user. It also handles cookies and sessions automatically. I asked an AI for help to brainstorm ways to catch background network requests which led to the final solution. 
 

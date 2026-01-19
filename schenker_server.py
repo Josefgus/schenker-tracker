@@ -26,7 +26,7 @@ async def get_schenker_data(reference_number):
         
         url = f"https://www.dbschenker.com/app/tracking-public/?language_region=en-US_US&refNumber={reference_number}"
         
-        #navigate to the tracking page for the given reference number
+        # Navigate to the tracking page for the given reference number
         try:
             await page.goto(url, wait_until="domcontentloaded", timeout=60000)
             await asyncio.sleep(2)
@@ -90,7 +90,7 @@ async def track_schenker(reference_number: str) -> str:
         Tracks a DB Schenker shipment and returns detailed package events and history.
         
         Args:
-            reference_number: The shipment reference number or STT number (e.g., '1806203236').
+            reference_number: The shipment reference number (e.g., '1806203236').
     """
     raw_data = await get_schenker_data(reference_number)
     formatted = format_output(raw_data)
