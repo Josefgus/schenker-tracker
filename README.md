@@ -1,17 +1,63 @@
 I followd the official MCP websites guide on how to set up an MCP server. But if you have downloaded this repo you do not need to folow all the steps.
 
-1. Python 3.10 or higher installed.
+# Instructions on how to set up and test the tool
+First you need to have Python 3.10 or higher installed.
 You must use the Python MCP SDK 1.2.0 or higher.
 
-2. Install uv 
-# macOS / Linux
-curl -LsSf https://astral.sh/uv/install.sh | sh
+# Install uv 
+macOS / Linux
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+Windows
+    powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-# Windows
-powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
-
-git clone https://github.com/your-repo/tracker.git
-cd tracker
-
-# This installs Python, creates the .venv, and installs libraries
+# Clone repo
+git clone https://github.com/Josefgus/schenker-tracker
+cd schenker-tracker
 uv sync
+
+# Install the headless browser
+uv run playwright install chromium
+
+# Start MCP server
+uv run python schenker_server.py
+
+# Test in terminal
+uv run python schenker_terminal.py
+
+# To test with Claude for Desktop
+install latest version of claude desktop https://claude.com/download
+Run claude
+
+open App configuration at ~/Library/Application Support/Claude/claude_desktop_config.json (for macOS/linux)
+
+or 
+AppData\Claude\claude_desktop_config.json (for Windows)
+
+add our mcp server like so:
+{
+  "mcpServers": {
+    "db_tracker": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "C:\\ABSOLUTE\\PATH\\TO\\PARENT\\FOLDER\\SCHENKER-TRACKER",
+        "run",
+        "schenker_server.py"
+      ]
+    }
+  }
+}
+
+You may need to put the full path to the uv executable in the command field. You can get this by running which uv on macOS/Linux or where uv on Windows.
+
+Restart Claude and the mcp server should be detected, then you clould ask for tracking updates for a package.
+
+# How to test the tool 
+To test the tool in the terminal, run the script schenker_terminal.py
+Enter a reference number and wait for the response to be printed in the terminal. (e.g., '1806203236')
+
+# How do I approach extracting data from schenker?
+Initial Exploration of the project. 
+I started by manually checking the public DB Schenker tracking portal to see what data was visible and how it was fetched. I used browser developer tools to analyze network traffic and the structure of the site to find where the information came from. I soon realized that a standard GET or POST request would not work because the website is a modern application that relies on client-side JavaScript to show data. The site also uses cookies and security checks like CAPTCHAs to stop automated scraping. To solve the JavaScript and security problems I decided to use a headless browser with Playwright. This allows the script to run a full browser without a GUI and execute all JavaScript like a real user. It also handles cookies and sessions automatically. I asked an AI for help to brainstorm ways to catch background network requests which led to the final solution. 
+
+I wanted to track every individual package but I was stuck. The swedish website i was using did not include this data. After some googling i hapend to land on the US website and I saw that the US version of the tracking app provides much more information. I analyzed the background traffic of the US site and found a specific JSON response that contained the detailed data I needed. I updated the code to use the international tracking URL and intercept the raw JSON data instead of scraping text from the screen. This makes the data very accurate. The tool now provides the full shipment history and specific status updates for every single package in the shipment.

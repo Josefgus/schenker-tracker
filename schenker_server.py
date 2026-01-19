@@ -90,7 +90,7 @@ async def track_schenker(reference_number: str) -> str:
         Tracks a DB Schenker shipment and returns detailed package events and history.
         
         Args:
-            reference_number: The shipment reference number or STT number (e.g., 'VAN5022058').
+            reference_number: The shipment reference number or STT number (e.g., '1806203236').
     """
     raw_data = await get_schenker_data(reference_number)
     formatted = format_output(raw_data)
