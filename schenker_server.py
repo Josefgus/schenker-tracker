@@ -41,6 +41,8 @@ def format_output(raw_json):
     # Handle error case, e.g., if no data found
     if not raw_json:
         return {"error": "Could not find LandStt-file. Check reference number."}
+    if "error" in raw_json:
+        return raw_json
         
     loc = raw_json.get("location", {})
     goods = raw_json.get("goods", {})
